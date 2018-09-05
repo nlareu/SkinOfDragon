@@ -57,6 +57,8 @@ public class AvatarController : MonoBehaviour
         }
     }
 
+    public Inventory Inventory = new Inventory();
+
     private Animator animator;
     internal BoxCollider2D boxCollider;
     private string playerName
@@ -201,6 +203,10 @@ public class AvatarController : MonoBehaviour
             if (itemCollider)
             {
                 Debug.Log("Item action fired!");
+
+                var ic = itemCollider.GetComponent<ItemController>();
+
+                ic.FireAction(this);
             }
         }
 
