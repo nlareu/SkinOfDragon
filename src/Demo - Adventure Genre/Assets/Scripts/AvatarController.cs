@@ -5,6 +5,12 @@ public class AvatarController : MonoBehaviour
     public float debugvar = 10f;
 
     public float AxisSensitive = 0.7f;
+    public float CollisionDetectionRadius = 5f;
+    public GameObject CollisionDetectorBottom;
+    public GameObject CollisionDetectorLeft;
+    public GameObject CollisionDetectorRight;
+    public GameObject CollisionDetectorTop;
+    public LayerMask ItemsLayerMask; 
     //public bool IsJumping = false;
     //public float JumpHeight = 250.0f;
     public int PlayerNumber { get; protected set; }
@@ -57,9 +63,11 @@ public class AvatarController : MonoBehaviour
     {
         get { return "Player" + this.PlayerNumber + "-"; }
     }
+
     private AvatarStates previousState;
     //private SpriteRenderer spriteRendered;
     internal Rigidbody2D rigidBody;
+    private GameObject currentCollisionDetector;
 
     private void Awake()
     {
@@ -104,6 +112,13 @@ public class AvatarController : MonoBehaviour
         {
             moveVector += Vector2.left * this.Speed * Time.deltaTime;
 
+            this.currentCollisionDetector = this.CollisionDetectorLeft;
+
+            this.CollisionDetectorBottom.SetActive(false);
+            this.CollisionDetectorLeft.SetActive(true);
+            this.CollisionDetectorRight.SetActive(false);
+            this.CollisionDetectorTop.SetActive(false);
+
             this.animator.SetBool("Moving", true);
             this.animator.SetFloat("MoveX", -1.5f);
         }
@@ -111,6 +126,13 @@ public class AvatarController : MonoBehaviour
             || (axisHor >= this.AxisSensitive))
         {
             moveVector += Vector2.right * this.Speed * Time.deltaTime;
+
+            this.currentCollisionDetector = this.CollisionDetectorRight;
+
+            this.CollisionDetectorBottom.SetActive(false);
+            this.CollisionDetectorLeft.SetActive(false);
+            this.CollisionDetectorRight.SetActive(true);
+            this.CollisionDetectorTop.SetActive(false);
 
             this.animator.SetBool("Moving", true);
             this.animator.SetFloat("MoveX", 1.5f);
@@ -125,6 +147,13 @@ public class AvatarController : MonoBehaviour
         {
             moveVector += Vector2.up * this.Speed * Time.deltaTime;
 
+            this.currentCollisionDetector = this.CollisionDetectorTop;
+
+            this.CollisionDetectorBottom.SetActive(false);
+            this.CollisionDetectorLeft.SetActive(false);
+            this.CollisionDetectorRight.SetActive(false);
+            this.CollisionDetectorTop.SetActive(true);
+
             this.animator.SetBool("Moving", true);
             this.animator.SetFloat("MoveY", 1.5f);
         }
@@ -132,6 +161,13 @@ public class AvatarController : MonoBehaviour
             || (axisHor >= this.AxisSensitive))
         {
             moveVector += Vector2.down * this.Speed * Time.deltaTime;
+
+            this.currentCollisionDetector = this.CollisionDetectorBottom;
+
+            this.CollisionDetectorBottom.SetActive(true);
+            this.CollisionDetectorLeft.SetActive(false);
+            this.CollisionDetectorRight.SetActive(false);
+            this.CollisionDetectorTop.SetActive(false);
 
             this.animator.SetBool("Moving", true);
             this.animator.SetFloat("MoveY", -1.5f);
@@ -157,16 +193,40 @@ public class AvatarController : MonoBehaviour
         //    this.IsJumping = true;
         //}
 
+
+        if (Input.GetButtonDown(this.playerName + "Action"))
+        {
+            Collider2D itemCollider = Physics2D.OverlapCircle(this.currentCollisionDetector.transform.position, this.CollisionDetectionRadius, this.ItemsLayerMask);
+
+            if (itemCollider)
+            {
+                Debug.Log("Item action fired!");
+            }
+        }
+
+
         //this.rigidBody.velocity = new Vector2(moveVector.x, this.rigidBody.velocity.y);
         this.transform.Translate(moveVector);
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        CollisionsManager.ResolveCollision(this.gameObject, col.gameObject, col);
-    }
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        CollisionsManager.ResolveCollision(this.gameObject, col.gameObject, col);
-    }
+    //private void OnCollisionEnter2D(Collision2D col)
+    //{
+    //    CollisionsManager.ResolveCollision(this.gameObject, col.gameObject, col);
+    //}
+    //private void OnTriggerEnter2D(Collider2D col)
+    //{
+    //    CollisionsManager.ResolveCollision(this.gameObject, col.gameObject, col);
+    //}
+
+    //#region Subclasses
+
+    //enum CollisionDetectors
+    //{
+    //    Bottom,
+    //    Left,
+    //    Right,
+    //    Top,
+    //}
+
+    //#endregion
 }
