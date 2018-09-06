@@ -8,6 +8,9 @@ public class Item_Bacha : ItemController
         {
             player.Inventory.Items.Remove("valde");
 
+            player.ActiveInventory_Valde.SetActive(false);
+            player.ActiveInventory_ValdeConAgua.SetActive(true);
+
             player.Inventory.Items.Add("valdeConAgua");
         }
     }

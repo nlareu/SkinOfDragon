@@ -8,7 +8,9 @@ public class Item_Valde : ItemController
         {
             player.Inventory.Items.Add("valde");
 
-            Destroy(this);
+            player.ActiveInventory_Valde.SetActive(true);
+
+            Destroy(this.gameObject);
         }
     }
 }

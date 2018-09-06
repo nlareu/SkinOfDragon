@@ -8,6 +8,8 @@ public class Item_Fuego : ItemController
         {
             player.Inventory.Items.Remove("valde");
 
+            player.ActiveInventory_ValdeConAgua.SetActive(false);
+
             Destroy(this.gameObject);
         }
     }

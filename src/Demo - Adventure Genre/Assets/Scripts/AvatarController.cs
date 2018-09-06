@@ -59,6 +59,9 @@ public class AvatarController : MonoBehaviour
 
     public Inventory Inventory = new Inventory();
 
+    public GameObject ActiveInventory_Valde;
+    public GameObject ActiveInventory_ValdeConAgua;
+
     private Animator animator;
     internal BoxCollider2D boxCollider;
     private string playerName
@@ -83,7 +86,7 @@ public class AvatarController : MonoBehaviour
         this.PlayerNumber = AppController.AddPlayer(this);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         switch (this.State)
         {
@@ -214,6 +217,7 @@ public class AvatarController : MonoBehaviour
         //this.rigidBody.velocity = new Vector2(moveVector.x, this.rigidBody.velocity.y);
         this.transform.Translate(moveVector);
     }
+
 
     //private void OnCollisionEnter2D(Collision2D col)
     //{
