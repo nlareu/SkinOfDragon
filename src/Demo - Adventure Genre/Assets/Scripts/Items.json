@@ -1,0 +1,14 @@
+{
+	"Items":{
+		"Item1":{
+			"id":"item01",
+			"name":"Balde",
+			"icon":"valde"
+		},
+		"Item2":{
+			"id":"item02",
+			"name":"Balde con agua",
+			"icon":"valdeConAgua"
+		}
+	}
+}
