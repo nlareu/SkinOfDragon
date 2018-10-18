@@ -46,22 +46,53 @@ public class JSONLoader {
 		JSONObject jsonObj = new JSONObject (_json);
 		JSONObject jsonObjAux = jsonObj;
 
-		int itemCount = 0;
+		BaseItem[] baseArray;
+		ConsumableItems[] consumablesArray;
+
+		int itemCount = 0, consumablesCount = 0;
 
 		//Me fijo cuantos items hay dentro del archivo json
 		if (jsonObjAux.HasField ("Items")) {
 			itemCount = jsonObjAux.GetField ("Items").Count;
 		}
 
-		itemArray = new BaseItem[itemCount];
+		if (jsonObjAux.HasField ("Consumables")) {
+			consumablesCount = jsonObjAux.GetField ("Consumables").Count;
+		}
+
+		baseArray = new BaseItem[itemCount];
+		consumablesArray = new ConsumableItems[consumablesCount];
+		itemArray = new BaseItem[itemCount + consumablesCount];
 
 		//Por cada item del array voy cargando los items del json dato por dato
 		for (int i = 0; i < itemCount; i++) {
 			jsonObjAux = jsonObj.GetField ("Items");
-			itemArray [i] = new BaseItem ();
-			itemArray [i].id = jsonObjAux [i].GetField ("id").str;
-			itemArray [i].name = (jsonObjAux [i].HasField ("name")) ? jsonObjAux [i].GetField ("name").str : string.Empty;
-			itemArray [i].icon = Resources.Load<Sprite> ("Art/" + jsonObjAux [i].GetField ("icon").str);
+			baseArray [i] = new BaseItem ();
+			baseArray [i].id = jsonObjAux [i].GetField ("id").str;
+			baseArray [i].name = (jsonObjAux [i].HasField ("name")) ? jsonObjAux [i].GetField ("name").str : string.Empty;
+			baseArray [i].icon = Resources.Load<Sprite> ("Art/" + jsonObjAux [i].GetField ("icon").str);
+		}
+
+		//Carga los items consumibles
+		for (int i = 0; i < itemCount; i++) {
+			jsonObjAux = jsonObj.GetField ("Consumables");
+			consumablesArray [i] = new ConsumableItems ();
+			consumablesArray [i].id = jsonObjAux [i].GetField ("id").str;
+			consumablesArray [i].name = (jsonObjAux [i].HasField ("name")) ? jsonObjAux [i].GetField ("name").str : string.Empty;
+			consumablesArray [i].icon = Resources.Load<Sprite> ("Art/" + jsonObjAux [i].GetField ("icon").str);
+		}
+
+
+		//Hace un merge de todos los array de items en uno solo y lo devuelve
+		int index = 0;
+		for (int i = 0; i < baseArray.Length; i++) {
+			itemArray [index] = baseArray [i];
+			index++;
+		}
+
+		for (int i = 0; i < consumablesArray.Length; i++) {
+			itemArray [index] = consumablesArray [i];
+			index++;
 		}
 
 		return itemArray;

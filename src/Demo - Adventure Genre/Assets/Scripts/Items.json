@@ -10,5 +10,18 @@
 			"name":"Balde con agua",
 			"icon":"valdeConAgua"
 		}
+	},
+
+	"Consumables":{
+		"Item1":{
+			"id":"cons01",
+			"name":"???",
+			"icon":"valde"
+		},
+		"Item2":{
+			"id":"cons02",
+			"name":"???",
+			"icon":"valdeConAgua"
+		}
 	}
 }

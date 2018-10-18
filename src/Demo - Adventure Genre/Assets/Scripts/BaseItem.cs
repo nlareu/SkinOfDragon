@@ -8,4 +8,8 @@ public class BaseItem {
 
 	public string id, name;
 	public Sprite icon;
+	public int cant;
+
+	public virtual void Use(){
+	}
 }

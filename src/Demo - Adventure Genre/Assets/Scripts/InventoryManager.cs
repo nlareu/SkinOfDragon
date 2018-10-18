@@ -30,12 +30,18 @@ public class InventoryManager : GenericSingletonClass<InventoryManager> {
 
 	//Busco dentro de la base de datos de items un item con esta id y lo agrego al inventario
 	public void AddItem(string id){
-		for (int i = 0; i < inventoryArray.Length; i++) {
-			if (inventoryArray [i] != null) {
-			} else {
-				inventoryArray [i] = jsonDataBase.GetItem (id);
-				PutCanvasIcons ();
-				return;
+		if (SearchForItem (id) <= inventoryArray.Length) {
+			inventoryArray [SearchForItem (id)].cant++;
+			PutCanvasIcons (SearchForItem (id));
+		} else {
+			for (int i = 0; i < inventoryArray.Length; i++) {
+				if (inventoryArray [i] != null) {
+				} else {
+					inventoryArray [i] = jsonDataBase.GetItem (id);
+					inventoryArray [i].cant = 1;
+					PutCanvasIcons (i);
+					return;
+				}
 			}
 		}
 	}
@@ -45,37 +51,38 @@ public class InventoryManager : GenericSingletonClass<InventoryManager> {
 		for (int i = 0; i < inventoryArray.Length; i++) {
 			if (inventoryArray [i] != null) {
 				if (inventoryArray [i].id == id) {
-					inventoryArray [i] = null;
-					PutCanvasIcons ();
-					return;
+					inventoryArray [i].cant--;
+					if (inventoryArray [i].cant >= 0) {
+						inventoryArray [i] = null;
+						PutCanvasIcons (i);
+					}
 				}
 			}
 		}
 	}
 
 
-	//Busco si tengo cierto item dentro del inventario y devuelvo true si esta o false si no
-	public bool SearchForItem(string id){
+	//Busco si tengo cierto item dentro del inventario y devuelvo el indice donde este
+	public int SearchForItem(string id){
 		for (int i = 0; i < inventoryArray.Length; i++) {
 			if (inventoryArray [i] != null) {
 				if (inventoryArray [i].id == id) {
-					return true;
+					return i;
 				}
 			}
 		}
-		return false;
+		return (inventoryArray.Length + 1);
 	}
 
 	//Hago que los iconos de los items que tengo en el inventario aparezcan en los slots del canvas
-	void PutCanvasIcons(){
-		for (int i = 0; i < inventoryArray.Length; i++) {
-			if (inventoryArray [i] != null) {
-				canvasSlots [i].sprite = inventoryArray [i].icon;
-				canvasSlots [i].gameObject.SetActive (true);
+	void PutCanvasIcons(int index){
+		if (inventoryArray [index] != null) {
+			canvasSlots [index].sprite = inventoryArray [index].icon;
+			canvasSlots [index].GetComponentInChildren<Text> ().text = inventoryArray [index].cant.ToString ();
+			canvasSlots [index].gameObject.SetActive (true);
 
-			} else {
-				canvasSlots [i].gameObject.SetActive (false);
-			}
+		} else {
+			canvasSlots [index].gameObject.SetActive (false);
 		}
 	}
 }
