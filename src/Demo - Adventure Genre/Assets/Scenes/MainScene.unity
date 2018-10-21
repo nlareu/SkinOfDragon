@@ -574,7 +574,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 248259545}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15, y: -50, z: 0}
+  m_LocalPosition: {x: -55.8, y: -98.8, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children:
   - {fileID: 1454343342}
@@ -1157,7 +1157,7 @@ GameObject:
   - component: {fileID: 721435413}
   - component: {fileID: 721435412}
   m_Layer: 11
-  m_Name: posicionPlayer
+  m_Name: posicionPlayer4Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2410,7 +2410,6 @@ GameObject:
   - component: {fileID: 1532911326}
   - component: {fileID: 1532911328}
   - component: {fileID: 1532911327}
-  - component: {fileID: 1532911329}
   m_Layer: 10
   m_Name: bacha
   m_TagString: Untagged
@@ -2500,17 +2499,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!114 &1532911329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1532911325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e27a898dc362df47bf4332b27dad62e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1554931115
 Prefab:
   m_ObjectHideFlags: 0
