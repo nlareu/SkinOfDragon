@@ -67,11 +67,26 @@ public class InventoryManager : GenericSingletonClass<InventoryManager> {
 		for (int i = 0; i < inventoryArray.Length; i++) {
 			if (inventoryArray [i] != null) {
 				if (inventoryArray [i].id == id) {
+					i++;
 					return i;
 				}
 			}
 		}
 		return (inventoryArray.Length + 1);
+
+	}
+
+	//Busco si tengo cierto item y devuelvo true or false
+	public bool hasItem(string id){
+		for (int i = 0; i < inventoryArray.Length; i++) {
+			if (inventoryArray [i] != null) {
+				if (inventoryArray [i].id == id) {
+					return true;
+				}
+			}
+		}
+		return false;
+
 	}
 
 	//Hago que los iconos de los items que tengo en el inventario aparezcan en los slots del canvas

@@ -10,6 +10,11 @@
 			"name":"Balde con agua",
 			"icon":"valdeConAgua"
 		}
+		"Item3":{
+			"id":"item03",
+			"name":"Llave",
+			"icon":"Llave"
+		}
 	},
 
 	"Consumables":{

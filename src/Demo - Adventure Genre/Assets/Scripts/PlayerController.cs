@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour {
 
 	Animator playerAnim;
 
+	public GameObject miniMapa;
+
 	void Start () {
 		playerRB = GetComponent<Rigidbody2D> ();
 		playerAnim = GetComponent<Animator> ();
@@ -37,6 +39,23 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate(){
 		Movement ();
+
+		MiniMapa ();
+
+	}
+
+	void MiniMapa(){
+	
+		//Prender o apagar con la letra M
+		if(Input.GetKeyDown(KeyCode.M)){
+
+			if(miniMapa.activeSelf)
+				miniMapa.SetActive (false);
+			else
+				miniMapa.SetActive (true);
+
+		}
+	
 	}
 
 	void SetSpeed(){
