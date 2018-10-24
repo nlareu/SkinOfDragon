@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    //Esta clase es para aplicar a objetos que el jugador pueda empujar. Pueden bloquearse las direcciones de empuje,
+    //asi como tambien el eje completo desde las variables globales del objeto en el inspector.
+
 	//Creo las variables serializables para la velocidad del personaje caminando, corriendo y el radio de interaccion
 	[SerializeField]
 	float speed = 5f, runSpeed = 10f, interactionRange = 1f;
@@ -26,6 +29,10 @@ public class PlayerController : MonoBehaviour {
 	Animator playerAnim;
 
 	public GameObject miniMapa;
+
+    public Vector2 UltimaDireccion(){
+        return lastDirection;
+    }
 
 	void Start () {
 		playerRB = GetComponent<Rigidbody2D> ();
